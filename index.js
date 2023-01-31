@@ -49,7 +49,7 @@ function fetchTypes() {
 }
 
 function fetchSubTypes(mainType) {
-    return sendRequest(`fetchTypes/${type}`)
+    return sendRequest(`fetchTypes/${mainType}`)
 }
 
 
