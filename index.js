@@ -1,9 +1,9 @@
-const request = require('request');
-const fs = require('fs');
+import { get } from 'request';
+import { createWriteStream } from 'fs';
 
 function sendRequest(urlParts) {
     return new Promise((resolve, reject) => {
-        request.get('https://serverjars.com/api/' + urlParts, (error, response, body) => {
+        get('https://serverjars.com/api/' + urlParts, (error, response, body) => {
             if (error) {
                 reject({title: 'Error Occurred', message: 'Try again later!'})
             } else {
@@ -46,8 +46,8 @@ function fetchLatest(type,category) {
  */
 function downloadJar(type, version, output) {
     return new Promise((resolve) => {
-        let file = fs.createWriteStream(output);
-        resolve(request.get(`https://serverjars.com/api/fetchJar/${type}/${version}`).pipe(file));
+        let file = createWriteStream(output);
+        resolve(get(`https://serverjars.com/api/fetchJar/${type}/${version}`).pipe(file));
     });
 }
 
@@ -92,4 +92,4 @@ function fetchDetails(type,category,version) {
 }
 
 
-module.exports = {fetchLatest, downloadJar, fetchAll, fetchTypes, fetchSubTypes, fetchDetails};
+export default {fetchLatest, downloadJar, fetchAll, fetchTypes, fetchSubTypes, fetchDetails};
