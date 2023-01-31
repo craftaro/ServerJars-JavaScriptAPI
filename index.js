@@ -1,9 +1,9 @@
-import { get } from 'request';
+import pkg from 'request';
 import { createWriteStream } from 'fs';
 
 function sendRequest(urlParts) {
     return new Promise((resolve, reject) => {
-        get('https://serverjars.com/api/' + urlParts, (error, response, body) => {
+        pkg.get('https://serverjars.com/api/' + urlParts, (error, response, body) => {
             if (error) {
                 reject({title: 'Error Occurred', message: 'Try again later!'})
             } else {
@@ -47,7 +47,7 @@ function fetchLatest(type,category) {
 function downloadJar(type, version, output) {
     return new Promise((resolve) => {
         let file = createWriteStream(output);
-        resolve(get(`https://serverjars.com/api/fetchJar/${type}/${version}`).pipe(file));
+        resolve(pkg.get(`https://serverjars.com/api/fetchJar/${type}/${version}`).pipe(file));
     });
 }
 
